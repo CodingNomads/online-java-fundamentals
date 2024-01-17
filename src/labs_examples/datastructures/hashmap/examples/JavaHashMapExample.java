@@ -8,90 +8,37 @@ import java.util.Set;
 /**
  * Created by ryandesmond - https://codingnomads.co
  */
-public class JavaHashMapExample {
+public class Main {  
+  public static void main(String[] args){
+    // create the hashmap  
+    // the "key" will be the email, a String
+    // and the "value" will the Person object
+    HashMap<String, Integer> capitalCityPopulations = new HashMap();
+  
+    // "put" a few capital cities with their population
+    capitalCityPopulations.put("Ottawa", 1077900);
+    capitalCityPopulations.put("Lima", 11204000);
+    capitalCityPopulations.put("Nairobi", 5541172);
 
-    public static void main(String[] args){
+    // demonstrate "getting" an 
+    // element out of the HashMap
+    int limaPopulation = 
+      capitalCityPopulations.get("Lima");
+    System.out.println(limaPopulation);
 
-        // create the hashmap
-        // the "key" will be the email, a String
-        // the "value" will the Person object
-        HashMap<String, Person> peopleMap = new HashMap();
-
-        // create a few Person objects
-        Person ryan = new Person("Ryan", "Desmond", "ryan@codingnomads.co");
-        Person kim = new Person("Kim", "Desmond", "kim@codingnomads.co");
-        Person martin = new Person("Martin", "Breuss", "martin@codingnomads.co");
-        Person caden = new Person("Caden", "Mackenzie", "caden@codingnomads.co");
-
-        // "put" the Person objects into the HashMap
-        peopleMap.put(ryan.getEmail(), ryan);
-        peopleMap.put(kim.getEmail(), kim);
-        peopleMap.put(martin.getEmail(), martin);
-        peopleMap.put(caden.getEmail(), caden);
-
-
-
-        // demonstrate "getting" an element out of the HashMap
-        Person example = peopleMap.get("caden@codingnomads.co");
-
-        System.out.println(example.toString());
-
-        // demonstrate iterating through the entries of a HashMap
-        Set entries = peopleMap.entrySet();
-        Iterator iterator = entries.iterator();
-
-        // loop through the entries
-        while(iterator.hasNext()) {
-            // get each Entry individually
-            Map.Entry person = (Map.Entry)iterator.next();
-            // print out the entry's key and value
-            System.out.print("The key is: "+ person.getKey()
-                    + " and the value is: " + person.getValue().toString());
-        }
-    }
-}
-
-class Person {
-    private String firstName;
-    private String lastName;
-    private String email;
-
-    public Person(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    // demonstrate iterating through 
+    // the entries of a HashMap
+    Set entries = capitalCityPopulations.entrySet();
+    Iterator iterator = entries.iterator();
+    // loop through the entries
+    while(iterator.hasNext()) {
+      // get each Entry individually
+      Map.Entry city = 
+        (Map.Entry)iterator.next();
+      // print out the entry's key and value
+      System.out.print(
+        "The key is: "+ city.getKey() +
+        " and the value is: " + city.getValue());
+      }
+   }
 }
