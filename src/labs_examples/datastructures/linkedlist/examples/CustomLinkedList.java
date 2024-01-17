@@ -1,219 +1,226 @@
 package labs_examples.datastructures.linkedlist.examples;
 
 /**
- * Created by Kevin Graham - https://codingnomads.co
+ * Example 1: Defining a Linked List class Can store any data which can be
+ * compared (to enable searching) Has an internal Node class to manage each node
  */
-public class CustomLinkedList<T> {
+public class LinkedList<T extends Comparable<T>> {
 
-    // this "head" variable will always keep track of the first Node in the list.
-    private Node head;
-
-    // this constructor uses VarArgs - meaning you can pass in zero or more data elements to add to the list
-    public CustomLinkedList(T... data) {
-
-        if (data.length < 1) {
-            // if you don't pass in any data elements it will just instantiate an empty LinkedList (where "head" == null)
-            head = null;
-        } else {
-            // if you pass in 1 or more elements, each element will be added to the LinkedList by calling the add() method
-            for (int i = 0; i < data.length; i++) {
-                add(data[i]);
-            }
-        }
-    }
+  /**
+   * Defines a Node for a Linked List Accepts any data which can be compared (to
+   * enable searching)
+   */
+  class Node<T extends Comparable<T>> {
+    public T data;
+    public Node<T> next;
 
     /**
-     * Adds a new Node the given data to the end of the list
+     * Constructor
      *
-     * @param data to be added
+     * @param data The value to be stored
      */
-    public void add(T data) {
-        // call the insert() method, pass in the data as well as the current size of the LinkedList
-        // by calling the size() method which will return the length of the LinkedList
-        insert(data);
+    Node(T data) {
+      this.data = data;
+      this.next = null;
+    }
+  }
+
+  // Tracks the head of the list
+  private Node head;
+
+  /**
+   * Constructs an empty list
+   */
+  public LinkedList() {
+    this.head = null;
+  }
+
+  /**
+   * Adds data to the head of the list
+   *
+   * @param data The value to add to the list
+   */
+  public void addHead(T data) {
+    Node newNode = new Node(data);
+    newNode.next = this.head;
+    this.head = newNode;
+  }
+
+  /**
+   * Adds data to the tail of the list
+   *
+   * @param data The value to add to the list
+   */
+  public void addTail(T data) {
+    Node newNode = new Node(data);
+
+    // Is the list empty?
+    if (this.head == null) {
+      this.head = newNode;
+      return;
     }
 
-    /**
-     * Inserts a new Node with the given data at the given index
-     *
-     * @param data  to be added
-     */
-    public void insert(T data) {
-        // if "head" is null, create new root node
-        if (head == null) {
-            head = new Node(data);
-        } else {
-            // if we hit this "else" block, it means the user wants to attach the new node to the end of the list
+    // Find the last item in the list
+    Node currentNode = this.head;
 
-            // make a new reference to the head node that we can use to traverse the list
-            // we do this so we NEVER lose a secure reference to the head node
-            Node iterator = head;
+    // Find the end of the list
+    while (currentNode.next != null)
+      currentNode = currentNode.next;
 
-            // so we need to iterate all the way through list to find last node
-            // we'll know we've hit the last node when "iterator.next" is equal to null
-            while (iterator.next != null) {
-                iterator = iterator.next;
-            }
+    // Link the new node here
+    currentNode.next = newNode;
 
-            // once we exit the loop above, "iterator.next" will be referencing the final node in the list
-            // at this point we can attach the new Node to the "next" variable of the final node in th list
-            iterator.next = new Node(data);
-            
-        }
+  }
+
+  /**
+   * Adds data before the node containing the compare value
+   *
+   * @param data    The value to add to the list
+   * @param compare The value which should appear after data in the list
+   */
+  public void addBefore(T data, T compare) {
+    Node newNode = new Node(data);
+
+    // Is the list empty?
+    if (this.head == null) {
+      this.head = newNode;
+      return;
     }
 
-    /**
-     * Removes the Node at the given index
-     *
-     * @param index to put the Node
-     */
-    public void remove(int index) {
-        if (index == 0) {
-
-            // if we hit this "if" block, it means the user wants to delete the first node in the list
-            // so we just set "head" to "head.next" which effectively cuts the first node out of the list
-            head = head.next;
-
-        } else if (index < size()){
-
-            // if we hit this "else" block, it means that the user wants to delete a
-            // node in the middle of the list
-            try {
-                // create a simple variable to use for looping
-                int count = 0;
-
-                // create a "previous" node variable to use for tracking the "previous" node.
-                // we'll use this for deleting a node from the middle of the list
-                Node previous = null;
-
-                // creating a new variable that initially references the "head" node
-                // we'll use this new variable to traverse across the list
-                Node iterator = head;
-
-                // iterate until index is reached
-                while (count != index) {
-                    previous = iterator;
-                    iterator = iterator.next;
-                    count++;
-                }
-
-                // link previous node to the node after the current
-                previous.next = iterator.next;
-            } catch (NullPointerException ex) {
-                System.out.println("invalid index");
-            }
-        } else {
-            // if we hit this "else" block, it means the user wants to delete the node at the end of the list
-
-            // creating a new variable that initially references the "head" node
-            // we'll use this new variable to traverse across the list
-            Node iterator = head;
-
-            // so we need to iterate all the way through list to find last node
-            // we'll know we've hit the last node when "iterator.next" is equal to null
-            while (iterator.next != null) {
-                iterator = iterator.next;
-            }
-
-            // once we exit the loop above, "iterator.next" will be referencing the final node in the list
-            // at this point we can assign "iterator.next" to null - effectively "cutting off" the final node
-            iterator.next = null;
-
-        }
+    // Is the head what we want to follow our new node?
+    if (this.head.data == compare) {
+      newNode.next = this.head;
+      this.head = newNode;
+      return;
     }
 
-    /**
-     * Returns the value at the given index
-     *
-     * @param index to get the value
-     * @return the value at the index
-     */
-    public T get(int index) {
-        try {
-            // simple variable to use for looping over the list
-            int count = 0;
+    // Find the node we want to follow the new node
+    // This uses a trailing reference traversal
+    Node compareNode = this.head;
+    Node trailingNode = null;
 
-            // creating a new variable that initially references the "head" node
-            // we'll use this new variable to traverse across the list
-            Node iterator = head;
-
-            // iterate until index is reach
-            while (count != index) {
-                iterator = iterator.next;
-                count++;
-            }
-            return (T) iterator.data;
-
-        } catch (NullPointerException ex) {
-            return null; // list is empty
-        }
+    while (compareNode != null && compareNode.data != compare) {
+      trailingNode = compareNode;
+      compareNode = compareNode.next;
     }
 
-    /**
-     * Sets (updates) the value of the given index to the given data
-     *
-     * @param index to put the data
-     * @param data  to be set
-     */
-    public void set(int index, T data) {
-        try {
-            int count = 0;
-            Node iterator = head;
+    // We are either at the end of the list, or we found the compare data
+    // In either case, we can insert newNode between previousNode and compareNode
+    trailingNode.next = newNode;
+    newNode.next = compareNode;
 
-            // iterate through list
-            while (count != index) {
-                iterator = iterator.next;
-                count++;
-            }
+  }
 
-            // change data
-            iterator.data = data;
+  /**
+   * Remove the head of the list and return that data item
+   *
+   * @return The data item removed from the list. If the list is empty, this
+   *         returns null.
+   */
+  public T removeHead() {
+    // Empty list
+    if (this.head == null)
+      return null;
 
-        } catch (NullPointerException ex) {
-            System.out.println("invalid index");
-        }
+    // Save the head to return
+    Node returnNode = this.head;
+
+    // Make the head the next item in the list
+    this.head = this.head.next;
+
+    // Return the saved head
+    return (T) returnNode.data;
+  }
+
+  /**
+   * Remove the tail of the list, and return that data item
+   *
+   * @return The value at the tail of the list. If the list is empty, this returns
+   *         null.
+   */
+  public T removeTail() {
+    // Empty list
+    if (this.head == null)
+      return null;
+
+    // Only one item in the list?
+    if (this.head.next == null) {
+      // We just need to return it
+      Node returnNode = this.head;
+      this.head = null;
+      return (T) returnNode.data;
     }
 
-    /**
-     * Determines the size of the list
-     *
-     * @return an Integer size
-     */
-    public int size() {
-        int count = 0;
-        Node iterator = head;
+    // Otherwise, we walk the list with two nodes
+    Node returnNode = this.head;
+    Node trailingNode = returnNode;
 
-        // iterate through list
-        while (iterator != null) {
-            count++;
-            iterator = iterator.next;
-        }
-
-        return count;
+    // As long as we're not at the end
+    while (returnNode.next != null) {
+      // Make sure trailing node follows one link back
+      trailingNode = returnNode;
+      returnNode = returnNode.next;
     }
 
-    /**
-     * Converts the list into a String
-     *
-     * @return a human readable String
-     */
-    public String toString() {
-        Node iterator = head;
-        String output = "";
+    // We set trailing node as the new end of the list.
+    trailingNode.next = null;
+    return (T) returnNode.data;
+  }
 
-        // iterate through list
-        while (iterator != null) {
-            output += iterator.data + " ";
-            iterator = iterator.next;
-        }
+  /**
+   * Removes the first occurrence of specific data item from the list if it
+   * exists.
+   *
+   * @param data The value to look for in the list
+   */
+  public void remove(T data) {
+    // Is the list empty?
+    if (this.head == null)
+      return;
 
-        return output;
+    Node removeNode = this.head;
+    Node trailingNode = removeNode;
+
+    // As long as we haven't:
+    // - Reached the end of the list, and
+    // - Found the data item
+    // Keep walking the list
+    while (removeNode != null && removeNode.data != data) {
+      trailingNode = removeNode;
+      removeNode = removeNode.next;
     }
 
-    public boolean isEmpty() {
-        return head == null;
-    }
+    // If remove_node is null, then we didn't find anything
+    if (removeNode != null)
 
+      // Are we removing the head?
+      if (removeNode == trailingNode)
+        this.head = this.head.next;
+      else
+        // Excise this node from the list
+        trailingNode.next = removeNode.next;
 
+    // Question: Why don't we use find() here first?
+  }
 
+  /**
+   * Indicates whether a piece of data is in the list
+   *
+   * @param data The value to find in the list
+   * @return `true` if the data is found, `false` otherwise
+   */
+  public boolean find(T data) {
+    // Set the current node to the head of the list
+    Node currentNode = this.head;
+
+    // As long as we haven't:
+    // - Reached the end of the list, and
+    // - Found the data item
+    // Keep walking the list
+    while (currentNode != null && currentNode.data != data)
+      currentNode = currentNode.next;
+
+    // If currentNode is null, then we never found it
+    return currentNode != null;
+  }
 }
