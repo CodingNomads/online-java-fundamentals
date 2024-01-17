@@ -1,21 +1,18 @@
 package labs_examples.datastructures.stack.examples;
 
-import labs_examples.datastructures.linkedlist.examples.CustomLinkedList;
+import java.util.LinkedList;
 
-/**
- * Created by Kevin Graham - https://codingnomads.co
- */
 public class CustomStackExample<V> {
-
-    private CustomLinkedList<V> list = new CustomLinkedList<>();
-
+    // create the LinkedList that will be used
+    // as the underlying data structure
+    private LinkedList<V> list = new LinkedList<>();
     /**
      * Adds an item to the stack
      * @param item to be added
      */
     public void push(V item) {
         // insert item into front of list
-        list.insert(item);
+        list.addFirst(item);
     }
 
     /**
@@ -24,12 +21,8 @@ public class CustomStackExample<V> {
      */
     public V pop() {
         try {
-            // get first item
-            V item = list.get(0);
-            // remove first item
-            list.remove(0);
-            // return first item
-            return item;
+            // retrieve, remove, and return the first item
+            return list.removeFirst();
         } catch (NullPointerException ex) {
             System.out.println("Exception" + ex);
             return null;
@@ -40,7 +33,16 @@ public class CustomStackExample<V> {
      * Determines if the stack is empty
      * @return true if empty, false if not empty
      */
-    public boolean empty() {
+    public boolean isEmpty() {
         return list.isEmpty();
+    }
+
+    /**
+     * This empties the stack
+     * @return void
+     */
+    public void clear() {
+        // empty the linkedlist
+        list.clear();
     }
 }
