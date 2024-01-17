@@ -8,6 +8,4 @@ package labs_examples.datastructures.linkedlist.labs;
  *      additional helper methods that you think could be useful. Refer to Java's built-in
  *      LinkedList class for inspiration. Your new LinkedList class should ONLY allow users
  *      to add and remove elements from the front of the list AND the end of the list.
- *      Also, instead of using the index in the get() and remove() methods, these methods should
- *      get() and remove() based by the Node's value, not it's index.
  */
