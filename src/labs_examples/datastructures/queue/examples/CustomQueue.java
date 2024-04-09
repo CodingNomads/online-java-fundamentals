@@ -1,12 +1,14 @@
 package labs_examples.datastructures.queue.examples;
 
+import labs_examples.datastructures.linkedlist.examples.CustomLinkedList;
+
 // Queue is generic so it can hold any object type
-public class CustomQueue<V> {
+public class CustomQueue<V extends Comparable<V>> {
   // create a LinkedList for to use as 
   // the underlying data structure
   // keep this private so it can't be modified
   // outside of this class
-  private LinkedList<V> list = new LinkedList<>();
+  private CustomLinkedList list = new CustomLinkedList<V>();
 
   /**
    * Adds an item to the Queue
@@ -14,7 +16,7 @@ public class CustomQueue<V> {
    */
   public void enqueue(V item) {
     // insert item into front of list
-    list.addLast(item);
+    list.addTail(item);
   }
 
   /**
@@ -28,7 +30,7 @@ public class CustomQueue<V> {
     }
     try {
       // get item from the front of the Queue
-      V item = list.removeFirst();
+      V item = (V) list.removeFirst();
 
       // return first item that you got just above
       return item;

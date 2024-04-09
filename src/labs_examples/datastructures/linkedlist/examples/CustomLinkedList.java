@@ -40,14 +40,18 @@ public class CustomLinkedList<T extends Comparable<T>> {
    *
    * @param data The value to add to the list
    */
-  public void addHead(T data) {
+  public void add(T data) {
     Node newNode = new Node(data);
     newNode.next = this.head;
     this.head = newNode;
   }
 
+  public T peek() {
+    return (T) head.data;
+  }
+
   /**
-   * Adds data to the tail of the list
+   * Adds data to the tail of the list - just as an example
    *
    * @param data The value to add to the list
    */
@@ -73,7 +77,7 @@ public class CustomLinkedList<T extends Comparable<T>> {
   }
 
   /**
-   * Adds data before the node containing the compare value
+   * Adds data before the node containing the compare value - just as an example
    *
    * @param data    The value to add to the list
    * @param compare The value which should appear after data in the list
@@ -117,7 +121,7 @@ public class CustomLinkedList<T extends Comparable<T>> {
    * @return The data item removed from the list. If the list is empty, this
    *         returns null.
    */
-  public T removeHead() {
+  public T removeFirst() {
     // Empty list
     if (this.head == null)
       return null;
@@ -222,5 +226,12 @@ public class CustomLinkedList<T extends Comparable<T>> {
 
     // If currentNode is null, then we never found it
     return currentNode != null;
+  }
+
+  public boolean isEmpty(){
+    if (this.head == null)
+      return true;
+    else
+      return false;
   }
 }

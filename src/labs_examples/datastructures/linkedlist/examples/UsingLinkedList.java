@@ -13,10 +13,7 @@ public class UsingLinkedList {
         myLinkedList.add("using");
         myLinkedList.add("data structures!");
 
-        System.out.println(myLinkedList.get(0));
-        System.out.println(myLinkedList.get(1));
-        System.out.println(myLinkedList.get(2));
-        System.out.println(myLinkedList.get(3));
+        System.out.println(myLinkedList.peek());
     }
 
 }
