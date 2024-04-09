@@ -4,7 +4,7 @@ package labs_examples.datastructures.linkedlist.examples;
  * Example 1: Defining a Linked List class Can store any data which can be
  * compared (to enable searching) Has an internal Node class to manage each node
  */
-public class LinkedList<T extends Comparable<T>> {
+public class CustomLinkedList<T extends Comparable<T>> {
 
   /**
    * Defines a Node for a Linked List Accepts any data which can be compared (to
@@ -31,7 +31,7 @@ public class LinkedList<T extends Comparable<T>> {
   /**
    * Constructs an empty list
    */
-  public LinkedList() {
+  public CustomLinkedList() {
     this.head = null;
   }
 
