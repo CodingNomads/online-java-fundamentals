@@ -12,6 +12,7 @@ class FDemo {
     }
 
     // called when object is recycled
+    @Override
     protected void finalize() {
         System.out.println("Finalizing " + x);
     }
